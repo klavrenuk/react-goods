@@ -7,7 +7,7 @@ interface ContainerAuthProps {
 
   const ContainerAuth: React.FC<ContainerAuthProps> = ({ children }) => {
     return (
-        <div className='px-4 py-8'>
+        <div className='px-4 py-8 min-w-[450px]'>
             { children }
         </div>
     )

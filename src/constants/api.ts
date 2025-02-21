@@ -1,0 +1,1 @@
+export const fakeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5MCIsImV4cCI6MTc0MDIwNzI0MX0.dQOMqwAh17z4dZc7TeHXuC9LWhAWmsym-F5rQee6g7g';

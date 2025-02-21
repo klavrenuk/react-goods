@@ -1,7 +1,7 @@
-import React from 'react';
-
 import ContainerAuth from '@/components/containers/ContainerAuth';
 import LoginForm from '@/components/login/LoginForm';
+
+import "@/app/globals.css";
 
 const Login = () => {
     return (

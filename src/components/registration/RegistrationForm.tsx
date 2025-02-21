@@ -1,5 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+
+import {getRespErrorMessage} from '@/utils/errors';
+
+import api from '@/api/index';
 
 const RegistrationForm = () => {
   const {
@@ -9,13 +14,28 @@ const RegistrationForm = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log('Данные формы:', data);
-    // Здесь можно добавить логику отправки данных на сервер
-  };
-
-  // Для проверки совпадения паролей
+  const router = useRouter();
   const password = watch('password');
+
+  const onSubmit = (data) => {
+    api({
+      method: 'POST',
+      url: '/sign_up',
+      data: {
+        username: data.username,
+        password: data.password,
+        full_name: data.full_name
+      }
+    }).then(() => {
+      router.push('/login');
+
+    }).catch((err) => {
+      console.error('err', err);
+
+      const message = getRespErrorMessage(err);
+      alert(message);
+    })
+  };
 
   return (
     <form
@@ -24,7 +44,6 @@ const RegistrationForm = () => {
     >
       <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Регистрация</h2>
 
-      {/* Поле для имени */}
       <div className="mb-6">
         <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
           Имя пользователя
@@ -49,32 +68,6 @@ const RegistrationForm = () => {
         )}
       </div>
 
-      {/* Поле для email */}
-      <div className="mb-6">
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          placeholder="Введите ваш email"
-          className={`w-full px-4 py-2 border ${
-            errors.email ? 'border-red-500' : 'border-gray-300'
-          } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300`}
-          {...register('email', {
-            required: 'Email обязателен',
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: 'Некорректный email',
-            },
-          })}
-        />
-        {errors.email && (
-          <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-        )}
-      </div>
-
-      {/* Поле для пароля */}
       <div className="mb-6">
         <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
           Пароль
@@ -122,7 +115,30 @@ const RegistrationForm = () => {
         )}
       </div>
 
-      {/* Кнопка отправки */}
+      <div className="mb-6">
+        <label htmlFor="full_name" className="block text-sm font-medium text-gray-700 mb-2">
+          ФИО
+        </label>
+        <input
+          type="text"
+          id="full_name"
+          placeholder="Введите ваше ФИО"
+          className={`w-full px-4 py-2 border ${
+            errors.full_name ? 'border-red-500' : 'border-gray-300'
+          } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300`}
+          {...register('full_name', {
+            required: 'ФИО обязательно',
+            minLength: {
+              value: 3,
+              message: 'ФИО должно быть не менее 3 символов',
+            },
+          })}
+        />
+        {errors.full_name && (
+          <p className="text-red-500 text-sm mt-1">{errors.full_name.message}</p>
+        )}
+      </div>
+
       <button
         type="submit"
         className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-300"

@@ -1,6 +1,6 @@
 import type { THead } from "@/types/table";
 
-export const ProductThead:THead[] = [
+export const ProductThead: THead[] = [
     {
         title: 'название продукта',
         key: 'name'
@@ -11,7 +11,7 @@ export const ProductThead:THead[] = [
     },
     {
         title: 'количество товара в наличии',
-        key: 'count'
+        key: 'stock'
     },
     {
         title: 'бренд товара',
@@ -19,14 +19,14 @@ export const ProductThead:THead[] = [
     },
     {
         title: 'средняя оценка продукта',
-        key: 'middle'
+         key: 'reviews_count'
     },
     {
         title: 'количество отзывов на продукт',
-        key: 'count'
+        key: 'reviews_count'
     },
     {
         title: 'штрихкод товара',
-        key: 'shrix'
+        key: 'barcode'
     },
-]
+];
